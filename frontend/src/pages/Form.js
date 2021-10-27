@@ -1,4 +1,5 @@
 import { useState } from "react"
+import axios from 'axios'
 const Form = () => {
     const [newOperation, setNewOperation] = useState({
         concept:"",
@@ -18,7 +19,7 @@ const Form = () => {
             setRenderError(true)
             return false
         }else{
-            console.log(newOperation)
+            axios.post('http://localhost:4000/api/movements/add', {...newOperation})
             setRenderError(false) 
         }      
     }

@@ -1,14 +1,25 @@
 const express = require('express')
-require('./config/database')
-const database = require('./config/database')
 const router = require('./routes/index')
+const cors = require('cors')
 const app = express()
-app.use(cors())
-app.use(express.static('public'))
-const PORT = 4000
-const HOST = 'localhost'
-database.sync()
-.then(() =>{
-    app.use('/', router)
-    app.listen(PORT, HOST, () => console.log("Server listening"))
+const Sequelize = require('sequelize')
+const sequelize = new Sequelize('','root','',{
+    host: 'localhost',
+    dialect: 'mysql'
 })
+async function initialize(){
+    await sequelize.query("CREATE DATABASE IF NOT EXISTS `alkemy`;")
+    require('./config/database')
+    const database = require('./config/database')
+    app.use(cors())
+    app.use(express.json())
+    app.use(express.static('public'))
+    const PORT = 4000
+    const HOST = 'localhost'
+    database.sync()
+    .then(() =>{
+        app.use('/api', router)
+        app.listen(PORT, HOST, () => console.log("Server listening"))
+    })
+}
+initialize()
