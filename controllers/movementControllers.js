@@ -1,28 +1,30 @@
 const Movement = require('../models/Movement')
 const movementControllers = {
     addMovement: async (req, res)  => {
-        console.log(req.body)
-        // let newUser = {
-        //     username,
-        //     password: hashedPass
-        // }
-        // try{
-        //     await User.create(newUser)
-        //     res.render('login', {
-        //         loggedIn: false,
-        //         user: null,
-        //         title: 'Log In',
-        //         error: null,
-        //         userCreated: true
-        //     })
-        // }catch(e){
-        //     res.render('register', {
-        //         loggedIn: false,
-        //         user: null,
-        //         title: 'Register',
-        //         error: e.message
-        //     })
-        // }
+        const { concept, amount, date, isProfit } = req.body
+        let newMovement = {
+            concept,
+            amount,
+            date,
+            isProfit
+        }
+        try{
+            let movementCreated = await Movement.create(newMovement)
+            res.json({ success: true, response: movementCreated})
+        }catch(e){
+            res.json({ success: false, response: e.message})
+        }
+    },
+    getMovements: async (req, res) => {
+        try{
+            let movements = await Movement.findAll({
+                raw: true,
+                order: [['createdAt', 'DESC']]
+            })
+            res.json({ success: true, response: movements})
+        }catch(e){
+            res.json({ success: false, response: e.message})
+        }
     },
 }
 module.exports = movementControllers

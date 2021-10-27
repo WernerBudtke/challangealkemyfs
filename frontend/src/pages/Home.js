@@ -1,24 +1,50 @@
-const Home = () => {
+import { useEffect } from 'react'
+import { connect } from 'react-redux'
+import movementActions from '../redux/actions/movementActions'
+const Home = (props) => {
+    const { lastMovements, getMovements, balance } = props
+    useEffect(()=>{
+        if(!lastMovements){
+            getMovements().then((res) => {
+                !res && alert('Something went wrong, please reload')
+            })
+        }
+        // eslint-disable-next-line
+    },[])
+    if(!lastMovements) {
+        return (
+            <>
+                <main>
+                    <h2>Personal Finances</h2>
+                    <h3>Balance: Loading ...</h3>
+                    <h4>Last movements:</h4>
+                    <div id="balancesContainer">
+                        <p>Loading ...</p>
+                    </div>
+                </main>
+            </>
+        )
+    }
     return(
         <>
             <main>
                 <h2>Personal Finances</h2>
-                <h3>Balance: 10000$</h3>
+                <h3 className={`${balance > 0 ? 'isProfit' : 'isLoss'}`}>Balance: {`${balance}`}$</h3>
                 <h4>Last movements:</h4>
                 <div id="balancesContainer">
-                    <p>1</p>
-                    <p>2</p>
-                    <p>3</p>
-                    <p>4</p>
-                    <p>5</p>
-                    <p>6</p>
-                    <p>7</p>
-                    <p>8</p>
-                    <p>9</p>
-                    <p>10</p>
+                    {lastMovements.map((movement, index) => <p key={movement.id} className={`${movement.isProfit ? 'isProfit' : 'isLoss'}`}>{`${index + 1} - ${movement.amount} - ${movement.concept} - ${movement.date}`}</p>)}
                 </div>
             </main>
         </>
     )
 }
-export default Home
+const mapStateToProps = (state) => {
+    return {
+        lastMovements: state.movementReducer.lastMovements,
+        balance: state.movementReducer.balance
+    }
+}
+const mapDispatchToProps = {
+    getMovements: movementActions.getMovements
+}
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

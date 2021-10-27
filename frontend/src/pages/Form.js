@@ -1,6 +1,8 @@
 import { useState } from "react"
 import axios from 'axios'
-const Form = () => {
+import { connect } from "react-redux"
+import movementActions from "../redux/actions/movementActions"
+const Form = (props) => {
     const [newOperation, setNewOperation] = useState({
         concept:"",
         amount:0,
@@ -14,13 +16,15 @@ const Form = () => {
         })
     }
     const [renderError, setRenderError] = useState(false)
-    const submitHandler = () => {
+    const submitHandler = async () => {
         if(Object.values(newOperation).indexOf("") !== -1){
             setRenderError(true)
             return false
         }else{
-            axios.post('http://localhost:4000/api/movements/add', {...newOperation})
+            await axios.post('http://localhost:4000/api/movements/manage/add', {...newOperation})
+            await props.getMovements()
             setRenderError(false) 
+            props.history.push('/')
         }      
     }
     return(
@@ -49,4 +53,7 @@ const Form = () => {
         </>
     )
 }
-export default Form
+const mapDispatchToProps = {
+    getMovements: movementActions.getMovements
+}
+export default connect(null, mapDispatchToProps)(Form)

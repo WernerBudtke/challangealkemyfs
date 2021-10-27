@@ -1,7 +1,7 @@
 import { combineReducers } from "redux"
-import userReducer from "./userReducer"
+import movementReducer from "./movementReducer"
 
 const rootReducer = combineReducers({
-    usersRed : userReducer
+    movementReducer : movementReducer
 })
 export default rootReducer
