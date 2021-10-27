@@ -77,7 +77,7 @@ main h4, #balancesContainer{
     font-size: 1.5rem;
 }
 #mainForm div input{
-    width: 50%;
+    width: 60%;
     text-align: center;
     font-size: 1.5rem;
 }
@@ -97,4 +97,105 @@ button{
 }
 .isLoss{
     color: red;
+}
+#mainMovements div#balancesContainer{
+    overflow-y: auto;
+    height: 50vh;
+    width: 100%;
+}
+.movementContainer p {
+    cursor: pointer;
+}
+.movementContainer{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.editDeleteButtons{
+    padding: 0 1rem;
+    cursor: pointer;
+}
+@media screen and (max-width: 1680px){
+    html{
+        font-size: 2vw;
+    }
+}
+@media screen and (max-width: 1336px){
+    html{
+        font-size: 2vw;
+    }
+    header{
+        padding: 0;
+    }
+    nav{
+        width: 100%;
+    }
+    nav a{
+        font-size: 1.5rem;
+        padding: 0 1rem;
+    }
+    main{
+        width: 100%;
+    }
+    #mainForm div{
+        width: 90%;
+    }
+}
+@media screen and (max-width: 1024px){
+    html{
+        font-size: 2.2vw;
+    }
+}
+@media screen and (max-width: 800px){
+    html{
+        font-size: 2.3vw;
+    }
+}
+@media screen and (max-width: 700px){
+    html{
+        font-size: 2.4vw;
+    }
+}
+@media screen and (max-width: 600px){
+    html{
+        font-size: 2.5vw;
+    }
+    .movementContainer p {
+        font-size: 1.2rem;
+    }
+    .movementContainer div input {
+        font-size: 1.5rem;
+        width: 100%;
+    }
+    .movementContainer div {
+        width: 25%;
+    }
+    .editDeleteButtons{
+        padding: 0 0.5rem;
+        cursor: pointer;
+    }
+    h4{
+        font-size: 1.4rem;
+    }
+    h3{
+        font-size: 1.4rem;
+    }
+    #balancesContainer{
+        font-size: 1.2rem;
+    }
+}
+@media screen and (max-width: 500px){
+    html{
+        font-size: 2.6vw;
+    }
+}
+@media screen and (max-width: 400px){
+    html{
+        font-size: 2.7vw;
+    }
+}
+@media screen and (max-width: 300px){
+    html{
+        font-size: 2.8vw;
+    }
 }

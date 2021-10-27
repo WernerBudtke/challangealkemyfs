@@ -26,5 +26,24 @@ const movementControllers = {
             res.json({ success: false, response: e.message})
         }
     },
+    editMovement: async (req, res) => {
+        const { concept, amount, date, id } = req.body
+        try{
+            await Movement.upsert({id: id, concept, amount, date})
+            res.json({ success: true })
+        }catch(e){
+            res.json({ success: false, response: e.message})
+        }
+    },
+    removeMovement: async (req, res) => {
+        const { id } = req.params
+        try{
+            let movementFound = await Movement.findByPk(id)
+            await movementFound.destroy()
+            res.json({ success: true })
+        }catch(e){
+            res.json({ success: false, response: e.message})
+        }
+    }
 }
 module.exports = movementControllers
